@@ -18,4 +18,3 @@
 ## Usage
 Open workspace and set Example as Startup project and Run!
 MacOS/Linux can be built and run with provided VSCode project (expects Beef git clone in the same root folder as this project).
->>>>>>> e7469a6... NEW: VSCode multi-platform
