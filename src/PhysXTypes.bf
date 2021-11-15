@@ -530,7 +530,7 @@ namespace PhysX
 	{
 		// public void* vtable_;
 	}
-	[CRepr] public struct physx_pvdsdk_PvdDataStream_Pod;
+	[CRepr] public struct pvdsdk_PvdDataStream;
 	[CRepr] public struct PxConstraint
 	{
 		public char8[8] structgen_pad0;
@@ -1033,11 +1033,11 @@ namespace PhysX
 	{
 		public uint8 mBits;
 	}
-	[CRepr] public struct physx_pvdsdk_PvdDebugPoint_Pod;
-	[CRepr] public struct physx_pvdsdk_PvdDebugLine_Pod;
-	[CRepr] public struct physx_pvdsdk_PvdDebugTriangle_Pod;
-	[CRepr] public struct physx_pvdsdk_PvdDebugText_Pod;
-	[CRepr] public struct physx_pvdsdk_PvdClient_Pod;
+	[CRepr] public struct pvdsdk_PvdDebugPoint;
+	[CRepr] public struct pvdsdk_PvdDebugLine;
+	[CRepr] public struct pvdsdk_PvdDebugTriangle;
+	[CRepr] public struct pvdsdk_PvdDebugText;
+	[CRepr] public struct pvdsdk_PvdClient;
 	[CRepr] public struct PxDominanceGroupPair
 	{
 		public uint8 dominance0;
@@ -1436,7 +1436,7 @@ namespace PhysX
 		public uint16 quantizedCount;
 		public char8[2] structgen_pad0;
 	}
-	[CRepr] public struct PxTypedStridedData_physx_PxMaterialTableIndex__Pod
+	[CRepr] public struct PxTypedStridedData_PxMaterialTableIndex_
 	{
 		public uint32 stride;
 		public uint16* data;
@@ -1447,7 +1447,7 @@ namespace PhysX
 		public PxBoundedData triangles;
 		public PxMeshFlags flags;
 		public char8[6] structgen_pad0;
-		public PxTypedStridedData_physx_PxMaterialTableIndex__Pod materialIndices;
+		public PxTypedStridedData_PxMaterialTableIndex_ materialIndices;
 	}
 	[CRepr] public struct PxBVH33MidphaseDesc
 	{
@@ -1690,7 +1690,7 @@ namespace PhysX
 	{
 		public char8[1040] structgen_pad0;
 	}
-	[CRepr] public struct physx_PxSerialization_PxXmlMiscParameter_Pod
+	[CRepr] public struct PxSerialization_PxXmlMiscParameter
 	{
 		public PxVec3 upVector;
 		public PxTolerancesScale scale;
