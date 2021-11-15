@@ -45,7 +45,7 @@ namespace PhysX
 	public static class PhysXAPI
 	{
 		public typealias RaycastHitCallback = delegate uint32(PxRigidActor* actor, PxFilterData* filterData, PxShape* shape, uint32 hitFlags, void* userData);
-		public typealias AllocCallback = delegate void*(uint64 size, char8* typeName, char8* filename, int line, void* userdata);
+		public typealias AllocCallback = delegate void*(uint64 size, char8* typeName, char8* filename, int32 line, void* userdata);
 		public typealias DeallocCallback = delegate void(void* ptr, void* userdata);
 		public typealias SimulationShaderFilter = delegate uint16(FilterShaderCallbackInfo*);
 
@@ -255,7 +255,7 @@ namespace PhysX
 		[LinkName("PxBounds3_transformFast_mut_3")] public static extern PxBounds3 Bounds3_transformFast_mut_3(PxTransform* transform_pod, PxBounds3* bounds_pod);
 		[LinkName("PxBounds3_isValid_1")] public static extern bool Bounds3_isValid_1(PxBounds3* self__pod);
 		[LinkName("PxErrorCallback_delete")] public static extern void ErrorCallback_delete(PxErrorCallback* self__pod);
-		[LinkName("PxErrorCallback_reportError_mut")] public static extern void ErrorCallback_reportError_mut(PxErrorCallback* self__pod, int code_pod, char8* message, char8* file, int32 line);
+		[LinkName("PxErrorCallback_reportError_mut")] public static extern void ErrorCallback_reportError_mut(PxErrorCallback* self__pod, int32 code_pod, char8* message, char8* file, int32 line);
 		[LinkName("PxInputStream_read_mut")] public static extern uint32 InputStream_read_mut(PxInputStream* self__pod, void* dest, uint32 count);
 		[LinkName("PxInputStream_delete")] public static extern void InputStream_delete(PxInputStream* self__pod);
 		[LinkName("PxInputData_getLength")] public static extern uint32 InputData_getLength(PxInputData* self__pod);
@@ -397,8 +397,8 @@ namespace PhysX
 		[LinkName("PxStringTable_release_mut")] public static extern void StringTable_release_mut(PxStringTable* self__pod);
 		[LinkName("PxFoundation_release_mut")] public static extern void Foundation_release_mut(PxFoundation* self__pod);
 		[LinkName("PxFoundation_getErrorCallback_mut")] public static extern PxErrorCallback* Foundation_getErrorCallback_mut(PxFoundation* self__pod);
-		[LinkName("PxFoundation_setErrorLevel_mut")] public static extern void Foundation_setErrorLevel_mut(PxFoundation* self__pod, int mask_pod);
-		[LinkName("PxFoundation_getErrorLevel")] public static extern int Foundation_getErrorLevel(PxFoundation* self__pod);
+		[LinkName("PxFoundation_setErrorLevel_mut")] public static extern void Foundation_setErrorLevel_mut(PxFoundation* self__pod, int32 mask_pod);
+		[LinkName("PxFoundation_getErrorLevel")] public static extern int32 Foundation_getErrorLevel(PxFoundation* self__pod);
 		[LinkName("PxFoundation_getAllocatorCallback_mut")] public static extern PxAllocatorCallback* Foundation_getAllocatorCallback_mut(PxFoundation* self__pod);
 		[LinkName("PxFoundation_getReportAllocationNames")] public static extern bool Foundation_getReportAllocationNames(PxFoundation* self__pod);
 		[LinkName("PxFoundation_setReportAllocationNames_mut")] public static extern void Foundation_setReportAllocationNames_mut(PxFoundation* self__pod, bool value);
@@ -455,7 +455,7 @@ namespace PhysX
 		[LinkName("PxLightCpuTask_getReference")] public static extern int32 LightCpuTask_getReference(PxLightCpuTask* self__pod);
 		[LinkName("PxLightCpuTask_addReference_mut")] public static extern void LightCpuTask_addReference_mut(PxLightCpuTask* self__pod);
 		[LinkName("PxLightCpuTask_release_mut")] public static extern void LightCpuTask_release_mut(PxLightCpuTask* self__pod);
-		[LinkName("PxGeometry_getType")] public static extern int Geometry_getType(PxGeometry* self__pod);
+		[LinkName("PxGeometry_getType")] public static extern int32 Geometry_getType(PxGeometry* self__pod);
 		[LinkName("PxBoxGeometry_new")] public static extern PxBoxGeometry BoxGeometry_new();
 		[LinkName("PxBoxGeometry_new_1")] public static extern PxBoxGeometry BoxGeometry_new_1(float hx, float hy, float hz);
 		[LinkName("PxBoxGeometry_new_2")] public static extern PxBoxGeometry BoxGeometry_new_2(PxVec3 halfExtents__pod);
@@ -516,7 +516,7 @@ namespace PhysX
 		[LinkName("PxHeightFieldGeometry_new_1")] public static extern PxHeightFieldGeometry HeightFieldGeometry_new_1(PxHeightField* hf_pod, PxMeshGeometryFlags flags_pod, float heightScale_, float rowScale_, float columnScale_);
 		[LinkName("PxHeightFieldGeometry_isValid")] public static extern bool HeightFieldGeometry_isValid(PxHeightFieldGeometry* self__pod);
 		[LinkName("PxHeightFieldGeometry_isValid_1")] public static extern bool HeightFieldGeometry_isValid_1(PxHeightFieldGeometry* self__pod);
-		[LinkName("PxGeometryHolder_getType")] public static extern int GeometryHolder_getType(PxGeometryHolder* self__pod);
+		[LinkName("PxGeometryHolder_getType")] public static extern int32 GeometryHolder_getType(PxGeometryHolder* self__pod);
 		[LinkName("PxGeometryHolder_any_mut")] public static extern PxGeometry* GeometryHolder_any_mut(PxGeometryHolder* self__pod);
 		[LinkName("PxGeometryHolder_any")] public static extern PxGeometry* GeometryHolder_any(PxGeometryHolder* self__pod);
 		[LinkName("PxGeometryHolder_sphere_mut")] public static extern PxSphereGeometry* GeometryHolder_sphere_mut(PxGeometryHolder* self__pod);
@@ -783,7 +783,7 @@ namespace PhysX
 		[LinkName("PxShape_release_mut")] public static extern void Shape_release_mut(PxShape* self__pod);
 		[LinkName("PxShape_getReferenceCount")] public static extern uint32 Shape_getReferenceCount(PxShape* self__pod);
 		[LinkName("PxShape_acquireReference_mut")] public static extern void Shape_acquireReference_mut(PxShape* self__pod);
-		[LinkName("PxShape_getGeometryType")] public static extern int Shape_getGeometryType(PxShape* self__pod);
+		[LinkName("PxShape_getGeometryType")] public static extern int32 Shape_getGeometryType(PxShape* self__pod);
 		[LinkName("PxShape_setGeometry_mut")] public static extern void Shape_setGeometry_mut(PxShape* self__pod, PxGeometry* geometry_pod);
 		[LinkName("PxShape_getGeometry")] public static extern PxGeometryHolder Shape_getGeometry(PxShape* self__pod);
 		[LinkName("PxShape_getBoxGeometry")] public static extern bool Shape_getBoxGeometry(PxShape* self__pod, PxBoxGeometry* geometry_pod);
@@ -1021,8 +1021,8 @@ namespace PhysX
 		[LinkName("PxPhysics_createRigidStatic_mut")] public static extern PxRigidStatic* Physics_createRigidStatic_mut(PxPhysics* self__pod, PxTransform* pose_pod);
 		[LinkName("PxPhysics_createRigidDynamic_mut")] public static extern PxRigidDynamic* Physics_createRigidDynamic_mut(PxPhysics* self__pod, PxTransform* pose_pod);
 		[LinkName("PxPhysics_createPruningStructure_mut")] public static extern PxPruningStructure* Physics_createPruningStructure_mut(PxPhysics* self__pod, PxRigidActor** actors_pod, uint32 nbActors);
-		[LinkName("PxPhysics_createShape_mut")] public static extern PxShape* Physics_createShape_mut(PxPhysics* self__pod, PxGeometry* geometry_pod, PxMaterial* material_pod, bool isExclusive, PxShapeFlags shapeFlags_pod);
-		[LinkName("PxPhysics_createShape_mut_1")] public static extern PxShape* Physics_createShape_mut_1(PxPhysics* self__pod, PxGeometry* geometry_pod, PxMaterial** materials_pod, uint16 materialCount, bool isExclusive, PxShapeFlags shapeFlags_pod);
+		[LinkName("PxPhysics_createShape_mut")] public static extern PxShape* Physics_createShape_mut(PxPhysics* self__pod, PxGeometry* geometry_pod, PxMaterial* material_pod, bool isExclusive = false, PxShapeFlags shapeFlags = .eVISUALIZATION | .eSCENE_QUERY_SHAPE | .eSIMULATION_SHAPE);
+		[LinkName("PxPhysics_createShape_mut_1")] public static extern PxShape* Physics_createShape_mut_1(PxPhysics* self__pod, PxGeometry* geometry_pod, PxMaterial** materials_pod, uint16 materialCount, bool isExclusive = false, PxShapeFlags shapeFlags = .eVISUALIZATION | .eSCENE_QUERY_SHAPE | .eSIMULATION_SHAPE);
 		[LinkName("PxPhysics_getNbShapes")] public static extern uint32 Physics_getNbShapes(PxPhysics* self__pod);
 		[LinkName("PxPhysics_getShapes")] public static extern uint32 Physics_getShapes(PxPhysics* self__pod, PxShape** userBuffer_pod, uint32 bufferSize, uint32 startIndex);
 		[LinkName("PxPhysics_createConstraint_mut")] public static extern PxConstraint* Physics_createConstraint_mut(PxPhysics* self__pod, PxRigidActor* actor0_pod, PxRigidActor* actor1_pod, PxConstraintConnector* connector_pod, PxConstraintShaderTable* shaders_pod, uint32 dataSize);
@@ -1081,7 +1081,7 @@ namespace PhysX
 		[LinkName("PxSceneDesc_isValid_1")] public static extern bool SceneDesc_isValid_1(PxSceneDesc* self__pod);
 		[LinkName("PxSimulationStatistics_getNbBroadPhaseAdds")] public static extern uint32 SimulationStatistics_getNbBroadPhaseAdds(PxSimulationStatistics* self__pod);
 		[LinkName("PxSimulationStatistics_getNbBroadPhaseRemoves")] public static extern uint32 SimulationStatistics_getNbBroadPhaseRemoves(PxSimulationStatistics* self__pod);
-		[LinkName("PxSimulationStatistics_getRbPairStats")] public static extern uint32 SimulationStatistics_getRbPairStats(PxSimulationStatistics* self__pod, uint32 pairType_pod, int g0_pod, int g1_pod);
+		[LinkName("PxSimulationStatistics_getRbPairStats")] public static extern uint32 SimulationStatistics_getRbPairStats(PxSimulationStatistics* self__pod, uint32 pairType_pod, int32 g0_pod, int32 g1_pod);
 		[LinkName("PxSimulationStatistics_new")] public static extern PxSimulationStatistics SimulationStatistics_new();
 		[LinkName("PxPvdSceneClient_setScenePvdFlag_mut")] public static extern void PvdSceneClient_setScenePvdFlag_mut(PxPvdSceneClient* self__pod, uint32 flag_pod, bool value);
 		[LinkName("PxPvdSceneClient_setScenePvdFlags_mut")] public static extern void PvdSceneClient_setScenePvdFlags_mut(PxPvdSceneClient* self__pod, PxPvdSceneFlags flags_pod);
@@ -1256,7 +1256,7 @@ namespace PhysX
 		[LinkName("PxExtendedVec3_cross_mut_1")] public static extern void ExtendedVec3_cross_mut_1(PxExtendedVec3* self__pod, PxExtendedVec3* left_pod, PxExtendedVec3* right_pod);
 		[LinkName("PxExtendedVec3_cross")] public static extern PxExtendedVec3 ExtendedVec3_cross(PxExtendedVec3* self__pod, PxExtendedVec3* v_pod);
 		[LinkName("PxExtendedVec3_cross_mut_2")] public static extern void ExtendedVec3_cross_mut_2(PxExtendedVec3* self__pod, PxVec3* left_pod, PxExtendedVec3* right_pod);
-		[LinkName("PxObstacle_getType")] public static extern int Obstacle_getType(PxObstacle* self__pod);
+		[LinkName("PxObstacle_getType")] public static extern int32 Obstacle_getType(PxObstacle* self__pod);
 		[LinkName("PxBoxObstacle_new")] public static extern PxBoxObstacle BoxObstacle_new();
 		[LinkName("PxCapsuleObstacle_new")] public static extern PxCapsuleObstacle CapsuleObstacle_new();
 		[LinkName("PxObstacleContext_release_mut")] public static extern void ObstacleContext_release_mut(PxObstacleContext* self__pod);
@@ -1598,7 +1598,7 @@ namespace PhysX
 		[LinkName("phys_PxSetGroupsMask")] public static extern void SetGroupsMask(PxActor* actor_pod, PxGroupsMask* mask_pod);
 		[LinkName("PxDefaultErrorCallback_new_alloc")] public static extern PxDefaultErrorCallback* DefaultErrorCallback_new_alloc();
 		[LinkName("PxDefaultErrorCallback_delete")] public static extern void DefaultErrorCallback_delete(PxDefaultErrorCallback* self__pod);
-		[LinkName("PxDefaultErrorCallback_reportError_mut")] public static extern void DefaultErrorCallback_reportError_mut(PxDefaultErrorCallback* self__pod, int code_pod, char8* message, char8* file, int32 line);
+		[LinkName("PxDefaultErrorCallback_reportError_mut")] public static extern void DefaultErrorCallback_reportError_mut(PxDefaultErrorCallback* self__pod, int32 code_pod, char8* message, char8* file, int32 line);
 		[LinkName("PxRigidActorExt_createExclusiveShape_mut")] public static extern PxShape* RigidActorExt_createExclusiveShape_mut(PxRigidActor* actor_pod, PxGeometry* geometry_pod, PxMaterial** materials_pod, uint16 materialCount, PxShapeFlags shapeFlags_pod);
 		[LinkName("PxRigidActorExt_createExclusiveShape_mut_1")] public static extern PxShape* RigidActorExt_createExclusiveShape_mut_1(PxRigidActor* actor_pod, PxGeometry* geometry_pod, PxMaterial* material_pod, PxShapeFlags shapeFlags_pod);
 		[LinkName("PxRigidActorExt_getRigidActorShapeLocalBoundsList_mut")] public static extern PxBounds3* RigidActorExt_getRigidActorShapeLocalBoundsList_mut(PxRigidActor* actor_pod, uint32* numBounds_pod);

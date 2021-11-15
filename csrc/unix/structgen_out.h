@@ -807,7 +807,7 @@ struct physx_PxSceneDesc_Pod {
     physx_PxgDynamicsMemoryConfig_Pod gpuDynamicsConfig;
     uint32_t gpuMaxNumPartitions;
     uint32_t gpuComputeVersion;
-    char structgen_pad4[12];
+    physx_PxTolerancesScale_Pod tolerancesScale;
 };
 struct physx_PxRigidStatic_Pod {
     char structgen_pad0[8];

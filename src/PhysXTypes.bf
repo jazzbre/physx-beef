@@ -222,11 +222,11 @@ namespace PhysX
 	}
 	[CRepr] public struct PxGeometry
 	{
-		public int mType;
+		public int32 mType;
 	}
 	[CRepr] public struct PxBoxGeometry
 	{
-		public int mType;
+		public int32 mType;
 		public PxVec3 halfExtents;
 	}
 	[CRepr] public struct PxBVHStructure
@@ -238,7 +238,7 @@ namespace PhysX
 	}
 	[CRepr] public struct PxCapsuleGeometry
 	{
-		public int mType;
+		public int32 mType;
 		public float radius;
 		public float halfHeight;
 	}
@@ -270,7 +270,7 @@ namespace PhysX
 	}
 	[CRepr] public struct PxConvexMeshGeometry
 	{
-		public int mType;
+		public int32 mType;
 		public PxMeshScale scale;
 		public PxConvexMesh* convexMesh;
 		public PxConvexMeshGeometryFlags meshFlags;
@@ -279,12 +279,12 @@ namespace PhysX
 	}
 	[CRepr] public struct PxSphereGeometry
 	{
-		public int mType;
+		public int32 mType;
 		public float radius;
 	}
 	[CRepr] public struct PxPlaneGeometry
 	{
-		public int mType;
+		public int32 mType;
 	}
 	[CRepr] public struct PxMeshGeometryFlags
 	{
@@ -299,7 +299,7 @@ namespace PhysX
 	}
 	[CRepr] public struct PxTriangleMeshGeometry
 	{
-		public int mType;
+		public int32 mType;
 		public PxMeshScale scale;
 		public PxMeshGeometryFlags meshFlags;
 		public PxPadding_3__Pod paddingFromFlags;
@@ -315,7 +315,7 @@ namespace PhysX
 	}
 	[CRepr] public struct PxHeightFieldGeometry
 	{
-		public int mType;
+		public int32 mType;
 		public char8[4] structgen_pad0;
 		public PxHeightField* heightField;
 		public float heightScale;
@@ -676,10 +676,60 @@ namespace PhysX
 		public char8[4] structgen_pad1;
 		public void* userData;
 	}
-	[CRepr] public struct PxShapeFlags
+	public enum PxShapeFlags : uint8
 	{
-		public uint8 mBits;
-	}
+		/**
+		\brief The shape will partake in collision in the physical simulation.
+
+		\note It is illegal to raise the eSIMULATION_SHAPE and eTRIGGER_SHAPE flags.
+		In the event that one of these flags is already raised the sdk will reject any 
+		attempt to raise the other.  To raise the eSIMULATION_SHAPE first ensure that 
+		eTRIGGER_SHAPE is already lowered.
+
+		\note This flag has no effect if simulation is disabled for the corresponding actor (see
+		#PxActorFlag::eDISABLE_SIMULATION).
+
+		@see PxSimulationEventCallback.onContact() PxScene.setSimulationEventCallback() PxShape.setFlag(),
+		PxShape.setFlags()
+		*/
+		eSIMULATION_SHAPE = (1 << 0),
+
+		/**
+		\brief The shape will partake in scene queries (ray casts, overlap tests, sweeps, ...).
+		*/
+		eSCENE_QUERY_SHAPE = (1 << 1),
+
+		/**
+		\brief The shape is a trigger which can send reports whenever other shapes enter/leave its volume.
+
+		\note Triangle meshes and heightfields can not be triggers. Shape creation will fail in these cases.
+
+		\note Shapes marked as triggers do not collide with other objects. If an object should act both
+		as a trigger shape and a collision shape then create a rigid body with two shapes, one being a 
+		trigger shape and the other a collision shape. 	It is illegal to raise the eTRIGGER_SHAPE and 
+		eSIMULATION_SHAPE flags on a single PxShape instance.  In the event that one of these flags is already 
+		raised the sdk will reject any attempt to raise the other.  To raise the eTRIGGER_SHAPE flag first 
+		ensure that eSIMULATION_SHAPE flag is already lowered.
+
+		\note Trigger shapes will no longer send notification events for interactions with other trigger shapes.
+
+		\note Shapes marked as triggers are allowed to participate in scene queries, provided the eSCENE_QUERY_SHAPE
+		flag is set. 
+
+		\note This flag has no effect if simulation is disabled for the corresponding actor (see
+		#PxActorFlag::eDISABLE_SIMULATION).
+
+		@see PxSimulationEventCallback.onTrigger() PxScene.setSimulationEventCallback() PxShape.setFlag(),
+		PxShape.setFlags()
+		*/
+		eTRIGGER_SHAPE = (1 << 2),
+
+		/**
+		\brief Enable debug renderer for this shape
+
+		@see PxScene.getRenderBuffer() PxRenderBuffer PxVisualizationParameter
+		*/
+		eVISUALIZATION = (1 << 3) }
 	[CRepr] public struct PxRigidBody
 	{
 		public char8[8] structgen_pad0;
@@ -896,9 +946,205 @@ namespace PhysX
 		public uint32 maxNbRegions;
 		public uint32 maxNbBroadPhaseOverlaps;
 	}
-	[CRepr] public struct PxSceneFlags
+	public enum PxSceneFlags : uint32
 	{
-		public uint32 mBits;
+		/**
+		\brief Enable Active Actors Notification.
+
+		This flag enables the Active Actor Notification feature for a scene.  This
+		feature defaults to disabled.  When disabled, the function
+		PxScene::getActiveActors() will always return a NULL list.
+
+		\note There may be a performance penalty for enabling the Active Actor Notification, hence this flag should
+		only be enabled if the application intends to use the feature.
+
+		<b>Default:</b> False
+		*/
+		eENABLE_ACTIVE_ACTORS = (1 << 0),
+
+		/**
+		\brief Enables a second broad phase check after integration that makes it possible to prevent objects from
+		tunneling through eachother.
+
+		PxPairFlag::eDETECT_CCD_CONTACT requires this flag to be specified.
+
+		\note For this feature to be effective for bodies that can move at a significant velocity, the user should raise
+		the flag PxRigidBodyFlag::eENABLE_CCD for them. \note This flag is not mutable, and must be set in PxSceneDesc
+		at scene creation.
+
+		<b>Default:</b> False
+
+		@see PxRigidBodyFlag::eENABLE_CCD, PxPairFlag::eDETECT_CCD_CONTACT, eDISABLE_CCD_RESWEEP
+		*/
+		eENABLE_CCD = (1 << 1),
+
+		/**
+		\brief Enables a simplified swept integration strategy, which sacrifices some accuracy for improved performance.
+
+		This simplified swept integration approach makes certain assumptions about the motion of objects that are not
+		made when using a full swept integration.  These assumptions usually hold but there are cases where they could
+		result in incorrect behavior between a set of fast-moving rigid bodies. A key issue is that fast-moving dynamic
+		objects may tunnel through each-other after a rebound. This will not happen if this mode is disabled. However,
+		this approach will be potentially  faster than a full swept integration because it will perform significantly
+		fewer sweeps in non-trivial scenes involving many fast-moving objects. This approach  should successfully resist
+		objects passing through the static environment.
+
+		PxPairFlag::eDETECT_CCD_CONTACT requires this flag to be specified.
+
+		\note This scene flag requires eENABLE_CCD to be enabled as well. If it is not, this scene flag will do nothing.
+		\note For this feature to be effective for bodies that can move at a significant velocity, the user should raise
+		the flag PxRigidBodyFlag::eENABLE_CCD for them. \note This flag is not mutable, and must be set in PxSceneDesc
+		at scene creation.
+
+		<b>Default:</b> False
+
+		@see PxRigidBodyFlag::eENABLE_CCD, PxPairFlag::eDETECT_CCD_CONTACT, eENABLE_CCD
+		*/
+		eDISABLE_CCD_RESWEEP = (1 << 2),
+
+		/**
+		\brief Enable adaptive forces to accelerate convergence of the solver. 
+		
+		\note This flag is not mutable, and must be set in PxSceneDesc at scene creation.
+
+		<b>Default:</b> false
+		*/
+		eADAPTIVE_FORCE = (1 << 3),
+
+		/**
+		\brief Enable GJK-based distance collision detection system.
+		
+		\note This flag is not mutable, and must be set in PxSceneDesc at scene creation.
+
+		<b>Default:</b> true
+		*/
+		eENABLE_PCM = (1 << 6),
+
+		/**
+		\brief Disable contact report buffer resize. Once the contact buffer is full, the rest of the contact reports
+		will  not be buffered and sent.
+
+		\note This flag is not mutable, and must be set in PxSceneDesc at scene creation.
+		
+		<b>Default:</b> false
+		*/
+		eDISABLE_CONTACT_REPORT_BUFFER_RESIZE = (1 << 7),
+
+		/**
+		\brief Disable contact cache.
+		
+		Contact caches are used internally to provide faster contact generation. You can disable all contact caches
+		if memory usage for this feature becomes too high.
+
+		\note This flag is not mutable, and must be set in PxSceneDesc at scene creation.
+
+		<b>Default:</b> false
+		*/
+		eDISABLE_CONTACT_CACHE = (1 << 8),
+
+		/**
+		\brief Require scene-level locking
+
+		When set to true this requires that threads accessing the PxScene use the
+		multi-threaded lock methods.
+		
+		\note This flag is not mutable, and must be set in PxSceneDesc at scene creation.
+
+		@see PxScene::lockRead
+		@see PxScene::unlockRead
+		@see PxScene::lockWrite
+		@see PxScene::unlockWrite
+		
+		<b>Default:</b> false
+		*/
+		eREQUIRE_RW_LOCK = (1 << 9),
+
+		/**
+		\brief Enables additional stabilization pass in solver
+
+		When set to true, this enables additional stabilization processing to improve that stability of complex
+		interactions between large numbers of bodies.
+
+		Note that this flag is not mutable and must be set in PxSceneDesc at scene creation. Also, this is an
+		experimental feature which does result in some loss of momentum.
+		*/
+		eENABLE_STABILIZATION = (1 << 10),
+
+		/**
+		\brief Enables average points in contact manifolds
+
+		When set to true, this enables additional contacts to be generated per manifold to represent the average point
+		in a manifold. This can stabilize stacking when only a small number of solver iterations is used.
+
+		Note that this flag is not mutable and must be set in PxSceneDesc at scene creation.
+		*/
+		eENABLE_AVERAGE_POINT = (1 << 11),
+
+		/**
+		\brief Do not report kinematics in list of active actors.
+
+		Since the target pose for kinematics is set by the user, an application can track the activity state directly
+		and use this flag to avoid that kinematics get added to the list of active actors.
+
+		\note This flag has only an effect in combination with eENABLE_ACTIVE_ACTORS.
+
+		@see eENABLE_ACTIVE_ACTORS
+
+		<b>Default:</b> false
+		*/
+		eEXCLUDE_KINEMATICS_FROM_ACTIVE_ACTORS = (1 << 12),
+
+		/*\brief Enables the GPU dynamics pipeline
+
+		When set to true, a CUDA ARCH 3.0 or above-enabled NVIDIA GPU is present and the CUDA context manager has been
+		configured, this will run the GPU dynamics pipelin instead of the CPU dynamics pipeline.
+
+		Note that this flag is not mutable and must be set in PxSceneDesc at scene creation.
+		*/
+		eENABLE_GPU_DYNAMICS = (1 << 13),
+
+		/**
+		\brief Provides improved determinism at the expense of performance. 
+
+		By default, PhysX provides limited determinism guarantees. Specifically, PhysX guarantees that the exact scene
+		(same actors created in the same order) and simulated using the same  time-stepping scheme should provide the
+		exact same behaviour.
+
+		However, if additional actors are added to the simulation, this can affect the behaviour of the existing actors
+		in the simulation, even if the set of new actors do not interact with  the existing actors.
+
+		This flag provides an additional level of determinism that guarantees that the simulation will not change if
+		additional actors are added to the simulation, provided those actors do not interfere with the existing actors
+		in the scene. Determinism is only guaranteed if the actors are inserted in a consistent order each run in a
+		newly-created scene and simulated using a consistent time-stepping scheme.
+
+		Note that this flag is not mutable and must be set at scene creation.
+
+		Note that enabling this flag can have a negative impact on performance.
+
+		Note that this feature is not currently supported on GPU.
+
+		<b>Default</b> false
+		*/
+		eENABLE_ENHANCED_DETERMINISM = (1 << 14),
+
+		/**
+		\brief Controls processing friction in all solver iterations
+
+		By default, PhysX processes friction only in the final 3 position iterations, and all velocity
+		iterations. This flag enables friction processing in all position and velocity iterations.
+
+		The default behaviour provides a good trade-off between performance and stability and is aimed
+		primarily at game development.
+
+		When simulating more complex frictional behaviour, such as grasping of complex geometries with
+		a robotic manipulator, better results can be achieved by enabling friction in all solver iterations.
+
+		\note This flag only has effect with the default solver. The TGS solver always performs friction per-iteration.
+		*/
+		eENABLE_FRICTION_EVERY_ITERATION = (1 << 15),
+
+		eMUTABLE_FLAGS = eENABLE_ACTIVE_ACTORS | eEXCLUDE_KINEMATICS_FROM_ACTIVE_ACTORS
 	}
 	[CRepr] public struct PxCudaContextManager;
 	[CRepr] public struct PxgDynamicsMemoryConfig
@@ -924,41 +1170,41 @@ namespace PhysX
 		public char8[4] structgen_pad1;
 		public void* filterShader;
 		public PxSimulationFilterCallback* filterCallback;
-		public uint32 kineKineFilteringMode;
-		public uint32 staticKineFilteringMode;
-		public uint32 broadPhaseType;
+		public uint32 kineKineFilteringMode = 1;
+		public uint32 staticKineFilteringMode = 1;
+		public uint32 broadPhaseType = 2;
 		public char8[4] structgen_pad2;
 		public PxBroadPhaseCallback* broadPhaseCallback;
 		public PxSceneLimits limits;
 		public uint32 frictionType;
 		public uint32 solverType;
-		public float bounceThresholdVelocity;
-		public float frictionOffsetThreshold;
-		public float ccdMaxSeparation;
+		public float bounceThresholdVelocity = 2.0f;
+		public float frictionOffsetThreshold = 0.04f;
+		public float ccdMaxSeparation = 0.04f;
 		public float solverOffsetSlop;
-		public PxSceneFlags flags;
+		public PxSceneFlags flags = .eENABLE_PCM;
 		public char8[4] structgen_pad3;
 		public PxCpuDispatcher* cpuDispatcher;
 		public PxCudaContextManager* cudaContextManager;
-		public uint32 staticStructure;
-		public uint32 dynamicStructure;
-		public uint32 dynamicTreeRebuildRateHint;
+		public uint32 staticStructure = 1;
+		public uint32 dynamicStructure = 1;
+		public uint32 dynamicTreeRebuildRateHint = 100;
 		public uint32 sceneQueryUpdateMode;
 		public void* userData;
-		public uint32 solverBatchSize;
-		public uint32 solverArticulationBatchSize;
+		public uint32 solverBatchSize = 128;
+		public uint32 solverArticulationBatchSize = 16;
 		public uint32 nbContactDataBlocks;
-		public uint32 maxNbContactDataBlocks;
-		public float maxBiasCoefficient;
-		public uint32 contactReportStreamBufferSize;
-		public uint32 ccdMaxPasses;
-		public float ccdThreshold;
-		public float wakeCounterResetValue;
-		public PxBounds3 sanityBounds;
-		public PxgDynamicsMemoryConfig gpuDynamicsConfig;
-		public uint32 gpuMaxNumPartitions;
+		public uint32 maxNbContactDataBlocks = 0xffff;
+		public float maxBiasCoefficient = 3.40282347e+38f;
+		public uint32 contactReportStreamBufferSize = 8192;
+		public uint32 ccdMaxPasses = 1;
+		public float ccdThreshold = 3.40282347e+38f;
+		public float wakeCounterResetValue = 0.4f;
+		public PxBounds3 sanityBounds = PxBounds3() { minimum = PxVec3() { x = -8.50705867e+37f, y = -8.50705867e+37f, z = -8.50705867e+37f }, maximum = PxVec3() { x = 8.50705867e+37f, y = 8.50705867e+37f, z = 8.50705867e+37f } };
+		public PxgDynamicsMemoryConfig gpuDynamicsConfig = PxgDynamicsMemoryConfig() { constraintBufferCapacity = 33554432, contactBufferCapacity = 25165824, tempBufferCapacity = 16777216, contactStreamSize = 524288, patchStreamSize = 81920, forceStreamCapacity = 1048576, heapCapacity = 67108864, foundLostPairsCapacity = 262144 };
+		public uint32 gpuMaxNumPartitions = 8;
 		public uint32 gpuComputeVersion;
-		public char8[12] structgen_pad4;
+		public PxTolerancesScale tolerancesScale;
 	}
 	[CRepr] public struct PxRigidStatic
 	{
@@ -1208,7 +1454,7 @@ namespace PhysX
 	}
 	[CRepr] public struct PxObstacle
 	{
-		public int mType;
+		public int32 mType;
 		public char8[4] structgen_pad0;
 		public void* mUserData;
 		public PxExtendedVec3 mPos;
@@ -1216,7 +1462,7 @@ namespace PhysX
 	}
 	[CRepr] public struct PxBoxObstacle
 	{
-		public int mType;
+		public int32 mType;
 		public char8[4] structgen_pad0;
 		public void* mUserData;
 		public PxExtendedVec3 mPos;
@@ -1226,7 +1472,7 @@ namespace PhysX
 	}
 	[CRepr] public struct PxCapsuleObstacle
 	{
-		public int mType;
+		public int32 mType;
 		public char8[4] structgen_pad0;
 		public void* mUserData;
 		public PxExtendedVec3 mPos;
@@ -2121,5 +2367,18 @@ namespace PhysX
 	[CRepr] public struct PxPvdInstrumentationFlags
 	{
 		public uint8 mBits;
+	}
+
+	public enum PxGeometryType : int32
+	{
+		eSPHERE,
+		ePLANE,
+		eCAPSULE,
+		eBOX,
+		eCONVEXMESH,
+		eTRIANGLEMESH,
+		eHEIGHTFIELD,
+		eGEOMETRY_COUNT,//!< internal use only!
+		eINVALID = -1//!< internal use only!
 	}
 }
