@@ -1,0 +1,6 @@
+FileVersion = 1
+Dependencies = {corlib = "*", physx-beef = "*"}
+
+[Project]
+Name = "example"
+StartupObject = "example.Program"

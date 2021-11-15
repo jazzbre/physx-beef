@@ -1,0 +1,5 @@
+FileVersion = 1
+Projects = {physx-beef = {Path = "."}, example = {Path = "example"}}
+
+[Workspace]
+StartupProject = "example"

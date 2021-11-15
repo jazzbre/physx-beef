@@ -1,0 +1,6 @@
+[submodule "submodules/PhysX"]
+	path = submodules/PhysX
+	url = https://github.com/EmbarkStudios/PhysX.git
+[submodule "submodules/bx"]
+	path = submodules/bx
+	url = https://github.com/bkaradzic/bx.git

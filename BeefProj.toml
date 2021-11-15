@@ -1,0 +1,53 @@
+FileVersion = 1
+
+[Project]
+Name = "physx-beef"
+TargetType = "BeefLib"
+
+[Configs.Debug.Win64]
+LibPaths = ["$(ProjectDir)\\.build\\win64_vs2019\\bin\\physxDebug.lib"]
+OtherLinkFlags = "$(LinkFlags)"
+
+[Configs.Release.Win64]
+LibPaths = ["$(ProjectDir)\\.build\\win64_vs2019\\bin\\physxRelease.lib"]
+OtherLinkFlags = "$(LinkFlags)"
+
+[Configs.Paranoid.Win64]
+LibPaths = ["$(ProjectDir)\\.build\\win64_vs2019\\bin\\physxRelease.lib"]
+OtherLinkFlags = "$(LinkFlags)"
+
+[Configs.Test.Win64]
+LibPaths = ["$(ProjectDir)\\.build\\win64_vs2019\\bin\\physxRelease.lib"]
+OtherLinkFlags = "$(LinkFlags)"
+
+[Configs.Debug.macOS]
+LibPaths = ["$(ProjectDir)\\.build\\osx-x64\\bin\\libphysxDebug.a"]
+OtherLinkFlags = "$(LinkFlags)"
+
+[Configs.Release.macOS]
+LibPaths = ["$(ProjectDir)\\.build\\osx-x64\\bin\\libphysxRelease.a"]
+OtherLinkFlags = "$(LinkFlags)"
+
+[Configs.Paranoid.macOS]
+LibPaths = ["$(ProjectDir)\\.build\\osx-x64\\bin\\libphysxRelease.a"]
+OtherLinkFlags = "$(LinkFlags)"
+
+[Configs.Test.macOS]
+LibPaths = ["$(ProjectDir)\\.build\\osx-x64\\bin\\libphysxRelease.a"]
+OtherLinkFlags = "$(LinkFlags)"
+
+[Configs.Debug.Linux64]
+LibPaths = ["$(ProjectDir)\\.build\\linux64_gcc\\bin\\libphysxDebug.a"]
+OtherLinkFlags = "$(LinkFlags)"
+
+[Configs.Release.Linux64]
+LibPaths = ["$(ProjectDir)\\.build\\linux64_gcc\\bin\\libphysxRelease.a"]
+OtherLinkFlags = "$(LinkFlags)"
+
+[Configs.Paranoid.Linux64]
+LibPaths = ["$(ProjectDir)\\.build\\linux64_gcc\\bin\\libphysxRelease.a"]
+OtherLinkFlags = "$(LinkFlags)"
+
+[Configs.Test.Linux64]
+LibPaths = ["$(ProjectDir)\\.build\\linux64_gcc\\bin\\libphysxRelease.a"]
+OtherLinkFlags = "$(LinkFlags)"
