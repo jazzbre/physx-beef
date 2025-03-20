@@ -5,19 +5,19 @@ Name = "physx-beef"
 TargetType = "BeefLib"
 
 [Configs.Debug.Win64]
-LibPaths = ["$(ProjectDir)\\.build\\win64_vs2019\\bin\\physxDebug.lib"]
+LibPaths = ["$(ProjectDir)\\.build\\win64_vs2022\\bin\\physxDebug.lib"]
 OtherLinkFlags = "$(LinkFlags)"
 
 [Configs.Release.Win64]
-LibPaths = ["$(ProjectDir)\\.build\\win64_vs2019\\bin\\physxRelease.lib"]
+LibPaths = ["$(ProjectDir)\\.build\\win64_vs2022\\bin\\physxRelease.lib"]
 OtherLinkFlags = "$(LinkFlags)"
 
 [Configs.Paranoid.Win64]
-LibPaths = ["$(ProjectDir)\\.build\\win64_vs2019\\bin\\physxRelease.lib"]
+LibPaths = ["$(ProjectDir)\\.build\\win64_vs2022\\bin\\physxRelease.lib"]
 OtherLinkFlags = "$(LinkFlags)"
 
 [Configs.Test.Win64]
-LibPaths = ["$(ProjectDir)\\.build\\win64_vs2019\\bin\\physxRelease.lib"]
+LibPaths = ["$(ProjectDir)\\.build\\win64_vs2022\\bin\\physxRelease.lib"]
 OtherLinkFlags = "$(LinkFlags)"
 
 [Configs.Debug.macOS]

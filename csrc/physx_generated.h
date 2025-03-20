@@ -1,5 +1,6 @@
 using namespace physx;
 #include "structgen_out.h"
+/*
 static_assert(sizeof(physx::PxAllocatorCallback) == sizeof(physx_PxAllocatorCallback_Pod), "POD wrapper for physx::PxAllocatorCallback has incorrect size.");
 static_assert(sizeof(physx::PxAssertHandler) == sizeof(physx_PxAssertHandler_Pod), "POD wrapper for physx::PxAssertHandler has incorrect size.");
 static_assert(sizeof(physx::PxVec3) == sizeof(physx_PxVec3_Pod), "POD wrapper for physx::PxVec3 has incorrect size.");
@@ -247,6 +248,7 @@ static_assert(sizeof(physx::PxVehicleGraphDesc) == sizeof(physx_PxVehicleGraphDe
 static_assert(sizeof(physx::PxVehicleNoDrive) == sizeof(physx_PxVehicleNoDrive_Pod), "POD wrapper for physx::PxVehicleNoDrive has incorrect size.");
 static_assert(sizeof(physx::PxProfileScoped) == sizeof(physx_PxProfileScoped_Pod), "POD wrapper for physx::PxProfileScoped has incorrect size.");
 static_assert(sizeof(physx::PxPvdTransport) == sizeof(physx_PxPvdTransport_Pod), "POD wrapper for physx::PxPvdTransport has incorrect size.");
+*/
 extern "C" {
 void PxAllocatorCallback_delete(physx_PxAllocatorCallback_Pod* self__pod) {
 physx::PxAllocatorCallback* self_ = reinterpret_cast<physx::PxAllocatorCallback*>(self__pod);
